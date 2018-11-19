@@ -2,6 +2,7 @@ package com.lukas.body_sensor_lab;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
@@ -9,17 +10,17 @@ import java.io.IOException;
 import java.util.UUID;
 
 
-public class ConnectingThread extends Thread {
+public class ConnectingThread extends MyThread {
     String TAG = "ConnectingThread";
 
     private BluetoothDevice mmDevice;
     private BluetoothSocket mmSocket;
-    private UUID M_UUID;
-    ConnectedThread mConnectedThread;
+    private UUID m_uuid;
 
-    public ConnectingThread(BluetoothDevice device, UUID uuid) {
+    public ConnectingThread(BluetoothDevice device, UUID uuid, Handler handler) {
+        super(handler);
         mmDevice = device;
-        M_UUID = uuid;
+        m_uuid = uuid;
     }
 
     public void run(){
@@ -27,7 +28,7 @@ public class ConnectingThread extends Thread {
 
         // Get a BluetoothSocket for a connection with the given BluetoothDevice
         try {
-            tmp = mmDevice.createRfcommSocketToServiceRecord(M_UUID);
+            tmp = mmDevice.createRfcommSocketToServiceRecord(m_uuid);
         } catch (IOException e) {
             Log.e(TAG, "ConnectThread: Could not create InsecureRfcommSocket " + e.getMessage());
         }
@@ -68,9 +69,10 @@ public class ConnectingThread extends Thread {
 
 
     private void connected(BluetoothSocket mmSocket) {
+        Log.d(TAG, "CONNECTED !!!");
         Message msg = new Message();
-        msg.what = CONNECTING_HANLDER_FLAG;
-        msg.obj = IntegerResult;
-        MainActivity.this.msg_handler.sendMessage(msg);
+        msg.what = CONNECTING_FLAG;
+        msg.obj = mmSocket;
+        handler().sendMessage(msg);
     }
 }

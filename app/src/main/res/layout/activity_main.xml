@@ -9,14 +9,13 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     tools:context=".MainActivity"
-    android:transitionGroup="true"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bluetooth test"
-        android:id="@+id/textView"
+        android:text="Status: disconnected"
+        android:id="@+id/text_status"
         android:textSize="35dp" />
 
 
@@ -24,23 +23,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Visible / Send"
-        android:id="@+id/button_visible" />
+        <Button
+            android:id="@+id/button_stream_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stream Data"
+            android:textAllCaps="false" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="List devices"
-        android:id="@+id/button_list_devices" />
+        <Button
+            android:id="@+id/button_sleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sleep"
+            android:textAllCaps="false" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancle"
-        android:id="@+id/button_cancle" />
+        <Button
+            android:id="@+id/button_disconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disconnect"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
@@ -49,18 +51,16 @@
         android:layout_height="wrap_content"
         android:text="Paired devices:"
         android:id="@+id/textView2"
-        android:textSize="25dp"
-        android:layout_below="@+id/button4"
-        android:layout_alignLeft="@+id/listView"
-        android:layout_alignStart="@+id/listView" />
+        android:textSize="25dp" />
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:id="@+id/listView"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_below="@+id/textView2" />
+        android:id="@+id/listView"/>
 
-
+    <Button
+        android:id="@+id/button_list_devices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh"
+        android:textAllCaps="false" />
 </LinearLayout>

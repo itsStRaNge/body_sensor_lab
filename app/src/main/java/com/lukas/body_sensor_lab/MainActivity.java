@@ -1,6 +1,5 @@
 package com.lukas.body_sensor_lab;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 
@@ -18,9 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 
@@ -35,21 +36,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BluetoothAdapter m_bluetooth_adapter;
     private ArrayList<BluetoothDevice> m_pairedDevices;
     private ListView m_lv_paired_dev;
+    private TextView m_status;
 
     private ConnectingThread m_connecting_thread;
     private ConnectedThread m_connected_thread;
+
+    private final byte STREAM_DATA_BLUETOOTH = 0x62; // starts measuring and streams data via bluetooth
+    private final byte SLEEP_MODE = 0x78; // stops measuring
+    private final byte TRANSMIT_SD_CARD = 0x73; // transmits all stored data on sd card over bluetooth
+    private final byte ERASE_SD_CARD = 0x65;
+    private final byte START_MEASUREMENT = 0x6D; // starts measureing and stores data on sd card
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button b1 = (Button) findViewById(R.id.button_visible);
+        Button b1 = (Button) findViewById(R.id.button_stream_data);
         b1.setOnClickListener(this);
         b1 =(Button)findViewById(R.id.button_list_devices);
         b1.setOnClickListener(this);
-        b1 =(Button)findViewById(R.id.button_cancle);
+        b1 =(Button)findViewById(R.id.button_disconnect);
         b1.setOnClickListener(this);
+        b1 = (Button)findViewById(R.id.button_sleep);
+        b1.setOnClickListener(this);
+
+        m_status = (TextView) findViewById(R.id.text_status);
 
         m_bluetooth_adapter = BluetoothAdapter.getDefaultAdapter();
         m_lv_paired_dev = (ListView)findViewById(R.id.listView);
@@ -60,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(turnOn, 0);
             Toast.makeText(getApplicationContext(), "Turned on",Toast.LENGTH_LONG).show();
         }
-        list_devices();
 
+        list_devices();
         init_handler();
     }
 
@@ -70,22 +82,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void handleMessage(android.os.Message msg) {
                 if(msg.what == CONNECTED_HANDLER_FLAG){
-                    Log.d(TAG,"Received some data");
+                    if(msg.obj != null){
+                        byte[] buffer = (byte[]) msg.obj;
+                        Log.d(TAG, "InputStream: " + Arrays.toString(buffer));
+                    }
                 }else if(msg.what == CONNECTING_HANLDER_FLAG){
                     if(msg.obj != null){
+                        m_status.setText("Status: connected");
+
                         BluetoothSocket socket = (BluetoothSocket) msg.obj;
-                        m_connected_thread = new ConnectedThread(socket);
+                        m_connected_thread = new ConnectedThread(socket, msg_handler);
                         m_connected_thread.start();
                     }
                 }
             }
         };
     }
-    public  void visible(){
-        Intent getVisible = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-        startActivityForResult(getVisible, 0);
-    }
-
 
     public void list_devices(){
         m_pairedDevices = new ArrayList(m_bluetooth_adapter.getBondedDevices());
@@ -96,9 +108,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id){
                 BluetoothDevice d = m_pairedDevices.get(pos);
-                m_connecting_thread = new ConnectingThread(d, M_UUID);
+                m_connecting_thread = new ConnectingThread(d, M_UUID, msg_handler);
                 m_connecting_thread.start();
-
             }
         });
     }
@@ -109,18 +120,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_list_devices:
                 list_devices();
                 break;
-            case R.id.button_visible:
-                //visible();
-                mConnectedThread.write(null);
+            case R.id.button_stream_data:
+                m_connected_thread.write(STREAM_DATA_BLUETOOTH);
+                m_status.setText("Status: streaming");
                 break;
-            case R.id.button_cancle:
-
+            case R.id.button_sleep:
+                m_connected_thread.write(SLEEP_MODE);
+                m_status.setText("Status: sleep");
+                break;
+            case R.id.button_disconnect:
+                m_connected_thread.write(SLEEP_MODE);
+                m_connected_thread.cancel();
+                m_connecting_thread.cancel();
+                m_status.setText("Status: disconnect");
                 break;
         }
     }
-
-
-
-
-
 }
