@@ -4,63 +4,192 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Status: disconnected"
-        android:id="@+id/text_status"
-        android:textSize="35dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Connect"
+            android:textSize="18sp" />
+
+        <Switch
+            android:id="@+id/switch_connect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp">
 
-        <Button
-            android:id="@+id/button_stream_data"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:text="Stream Data"
-            android:textAllCaps="false" />
+            android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/button_sleep"
+        <Switch
+            android:id="@+id/switch_stream"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:id="@+id/layout_productive"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sleep"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/button_disconnect"
+            android:layout_gravity="center"
+            android:id="@+id/image_status"/>
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disconnect"
-            android:textAllCaps="false" />
+            android:text="Android Icon"
+            android:layout_gravity="center"
+            android:id="@+id/text_status"/>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Paired devices:"
-        android:id="@+id/textView2"
-        android:textSize="25dp" />
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:id="@+id/listView"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:id="@+id/layout_labeling"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_list_devices"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Refresh"
-        android:textAllCaps="false" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Labels"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_group">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Standing"
+                android:id="@+id/radio_standing"
+                android:checked="false"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sitting"
+                android:id="@+id/radio_sitting"
+                android:checked="false"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Walking"
+                android:id="@+id/radio_walking"
+                android:checked="false"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Running"
+                android:id="@+id/radio_running"
+                android:checked="false"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jumping"
+                android:id="@+id/radio_jumping"
+                android:checked="false"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nothing"
+                android:id="@+id/radio_nothing"
+                android:checked="true"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"/>
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status:"
+                android:textSize="18sp"
+                android:layout_marginRight="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nothing"
+                android:textSize="18sp"
+                android:id="@+id/text_labeling_status"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Labeling"
+            android:textSize="18sp" />
+
+        <Switch
+            android:id="@+id/switch_labeling"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="32dp"
+            android:checked="true"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Reset"/>
+    </LinearLayout>
 </LinearLayout>

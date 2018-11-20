@@ -40,6 +40,7 @@ public class ConnectingThread extends MyThread {
         try {
             mmSocket.connect();
             connected(mmSocket);
+            return;
         } catch (IOException e) {
             try {
                 // dirty workaround
@@ -48,6 +49,7 @@ public class ConnectingThread extends MyThread {
                 mmSocket =(BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(mmDevice,1);
                 mmSocket.connect();
                 connected(mmSocket);
+                return;
             } catch (Exception e1) {
                 try {
                     mmSocket.close();
@@ -57,8 +59,12 @@ public class ConnectingThread extends MyThread {
                 }
             }
         }
-
+        Message msg = new Message();
+        msg.what = CONNECTING_FLAG;
+        msg.obj = null;
+        handler().sendMessage(msg);
     }
+
     public void cancel() {
         try {
             mmSocket.close();
