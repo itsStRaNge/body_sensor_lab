@@ -57,13 +57,17 @@
         android:layout_weight="6"
         android:id="@+id/layout_productive"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxHeight="200dp"
+            android:maxWidth="250dp"
+            android:src="@drawable/nothing"
+            android:id="@+id/gif_status"
             android:layout_gravity="center"
-            android:id="@+id/image_status"/>
+            android:visibility="invisible"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +82,8 @@
         android:layout_height="0dp"
         android:layout_weight="6"
         android:id="@+id/layout_labeling"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"

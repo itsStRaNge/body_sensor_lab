@@ -1,13 +1,7 @@
 package com.lukas.body_sensor_lab;
 
-import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.rcsexample.bsnlib.BluetoothConnectionService;
-import com.rcsexample.bsnlib.ControlPacket;
-import com.rcsexample.bsnlib.Data;
-import com.rcsexample.bsnlib.DataProvider;
-import com.rcsexample.bsnlib.DeviceListActivity;
+import pl.droidsonroids.gif.GifImageView;
+
+import static com.lukas.body_sensor_lab.ActionClasses.*;
 
 
 public class MainActivity extends SensorHandler implements Switch.OnCheckedChangeListener{
@@ -39,10 +30,11 @@ public class MainActivity extends SensorHandler implements Switch.OnCheckedChang
     private Switch m_switch_labeling;
 
     private RadioGroup m_radiogroup_labels;
+    private int m_selected_label;
 
-    private ImageView m_prod_img_status;
     private TextView m_prod_txt_status;
     private TextView m_labeling_txt_status;
+    private GifImageView m_gif_action_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +53,7 @@ public class MainActivity extends SensorHandler implements Switch.OnCheckedChang
 
         m_radiogroup_labels = (RadioGroup) findViewById(R.id.radio_group);
 
-        m_prod_img_status = (ImageView) findViewById(R.id.image_status);
+        m_gif_action_status = (GifImageView) findViewById(R.id.gif_status);
         m_prod_txt_status = (TextView) findViewById(R.id.text_status);
         m_labeling_txt_status = (TextView) findViewById(R.id.text_labeling_status);
     }
@@ -115,5 +107,51 @@ public class MainActivity extends SensorHandler implements Switch.OnCheckedChang
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void set_action(int mode){
+        // parse mode to string and image
+        String mode_name;
+        int mode_gif_id;
+
+        switch (mode) {
+            case RUNNING_LABEL:
+                mode_name = RUNNING_STR;
+                mode_gif_id = R.drawable.running_stickman;
+                break;
+            case WALKING_LABEL:
+                mode_name = WALKING_STR;
+                mode_gif_id = R.drawable.walking_stickman;
+                break;
+            case STANDING_LABEL:
+                mode_name = STANDING_STR;
+                mode_gif_id = R.drawable.standing_stickman;
+                break;
+            case JUMPING_LABEL:
+                mode_name = JUMPING_STR;
+                mode_gif_id = R.drawable.jumping_stickman;
+                break;
+            case SITTING_LABEL:
+                mode_name = SITTING_STR;
+                mode_gif_id = R.drawable.sitting_stickman;
+                break;
+            case NOTHING_LABEL:
+                mode_name = NOTHING_STR;
+                mode_gif_id = R.drawable.nothing;
+                break;
+            default:
+                mode_name = "Nothing";
+                mode_gif_id = R.drawable.nothing;
+                break;
+        }
+
+        if(m_prod_layout.getVisibility() == View.VISIBLE) {
+            // Adjust Productive Layout
+            m_prod_txt_status.setText(mode_name);
+            m_gif_action_status.setImageResource(mode_gif_id);
+        }else if(m_label_layout.getVisibility() == View.VISIBLE){
+            // Adjust Label Layout
+            m_labeling_txt_status.setText(mode_name);
+        }
     }
 }
