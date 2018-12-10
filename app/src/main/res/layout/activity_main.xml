@@ -103,7 +103,8 @@
                 android:id="@+id/radio_standing"
                 android:checked="false"
                 android:textSize="18sp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="onRadioButtonClicked"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,7 +112,8 @@
                 android:id="@+id/radio_sitting"
                 android:checked="false"
                 android:textSize="18sp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="onRadioButtonClicked"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -120,7 +122,8 @@
                 android:id="@+id/radio_walking"
                 android:checked="false"
                 android:textSize="18sp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="onRadioButtonClicked"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -129,7 +132,8 @@
                 android:id="@+id/radio_running"
                 android:checked="false"
                 android:textSize="18sp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="onRadioButtonClicked"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -138,7 +142,8 @@
                 android:id="@+id/radio_jumping"
                 android:checked="false"
                 android:textSize="18sp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="onRadioButtonClicked"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -146,7 +151,8 @@
                 android:id="@+id/radio_nothing"
                 android:checked="true"
                 android:textSize="18sp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="onRadioButtonClicked"/>
         </RadioGroup>
 
         <LinearLayout

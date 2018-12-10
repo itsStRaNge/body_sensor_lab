@@ -1,16 +1,12 @@
 package com.lukas.body_sensor_lab;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -28,9 +24,6 @@ public class MainActivity extends SensorHandler implements Switch.OnCheckedChang
     private Switch m_switch_connect;
     private Switch m_switch_stream;
     private Switch m_switch_labeling;
-
-    private RadioGroup m_radiogroup_labels;
-    private int m_selected_label;
 
     private TextView m_prod_txt_status;
     private TextView m_labeling_txt_status;
@@ -50,8 +43,6 @@ public class MainActivity extends SensorHandler implements Switch.OnCheckedChang
         m_switch_stream.setOnCheckedChangeListener(this);
         m_switch_labeling = (Switch) findViewById(R.id.switch_labeling);
         m_switch_labeling.setOnCheckedChangeListener(this);
-
-        m_radiogroup_labels = (RadioGroup) findViewById(R.id.radio_group);
 
         m_gif_action_status = (GifImageView) findViewById(R.id.gif_status);
         m_prod_txt_status = (TextView) findViewById(R.id.text_status);
@@ -86,28 +77,36 @@ public class MainActivity extends SensorHandler implements Switch.OnCheckedChang
         }
     }
 
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        if(!checked)
+            return;
 
-    /** MENU **/
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i;
-        switch(item.getItemId()){
-            case R.id.action_main:
-                i = new Intent(this, MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(i);
-                return true;
-            case R.id.action_settings:
-                return true;
+        switch(view.getId()) {
+            case R.id.radio_jumping:
+                m_selected_label = JUMPING_LABEL;
+                break;
+            case R.id.radio_nothing:
+                m_selected_label = JUMPING_LABEL;
+                break;
+            case R.id.radio_sitting:
+                m_selected_label = SITTING_LABEL;
+                break;
+            case R.id.radio_standing:
+                m_selected_label = STANDING_LABEL;
+                break;
+            case R.id.radio_walking:
+                m_selected_label = WALKING_LABEL;
+                break;
+            case R.id.radio_running:
+                m_selected_label = NOTHING_LABEL;
+                break;
+            default:
+                m_selected_label = NOTHING_LABEL;
         }
-        return super.onOptionsItemSelected(item);
     }
+
 
     public void set_action(int mode){
         // parse mode to string and image

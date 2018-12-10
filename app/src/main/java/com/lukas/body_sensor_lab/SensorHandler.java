@@ -16,12 +16,18 @@ import com.rcsexample.bsnlib.Data;
 import com.rcsexample.bsnlib.DataProvider;
 import com.rcsexample.bsnlib.DeviceListActivity;
 
+import java.util.ArrayList;
+
 
 @SuppressLint("Registered")
 public  class SensorHandler extends AppCompatActivity implements BluetoothConnectionService.BluetoothConnectionListener {
     private final String TAG = "SensorHandler";
 
     protected static final int INTENT_REQUEST_CHOOSE_DEVICE = 1;
+
+    protected int m_selected_label;
+
+    /* Bluetooth Stuff */
     private BluetoothConnectionService m_bluetooth_service = null;
     private BluetoothAdapter m_bluetooth_adapter = null;
     private String m_device_address = "";
@@ -166,38 +172,14 @@ public  class SensorHandler extends AppCompatActivity implements BluetoothConnec
     private final DataProvider.OnDataAvailableListener onDataAvailableListener = new DataProvider.OnDataAvailableListener() {
         @Override
         public synchronized void onDataAvailable(Data data) {
-            Log.d(TAG, "Data Recieved yes");
+            Log.d(TAG, "Data Received yes");
             /*
-            // add the samples in data to the plots and our value arrays
-            for (int i = 0; i < data.getNrOfSamples(); i++) {
-                accSeriesX.addLast(data.getT().get(i), data.getX().get(i));
-                accSeriesY.addLast(data.getT().get(i), data.getY().get(i));
-                accSeriesZ.addLast(data.getT().get(i), data.getZ().get(i));
-
-                accX.addAll(data.getX());
-                accY.addAll(data.getY());
-                accZ.addAll(data.getZ());
-            }
-
-            // trim plots to maximum size
-            while (accSeriesX.size() > PLOT_HISTORY_SIZE)
-                accSeriesX.removeFirst();
-            while (accSeriesY.size() > PLOT_HISTORY_SIZE)
-                accSeriesY.removeFirst();
-            while (accSeriesZ.size() > PLOT_HISTORY_SIZE)
-                accSeriesZ.removeFirst();
-            while (accX.size() > PLOT_HISTORY_SIZE)
-                accX.remove(0);
-            while (accY.size() > PLOT_HISTORY_SIZE)
-                accY.remove(0);
-            while (accZ.size() > PLOT_HISTORY_SIZE)
-                accZ.remove(0);
-
-            // calculate the spectrum
-            getFrequencies();
-
-            // update the plot
-            accPlot.redraw();*/
+            ArrayList<Double> timestamp = data.getT();
+            ArrayList<Double> x = data.getX();
+            ArrayList<Double> y = data.getY();
+            ArrayList<Double> z = data.getZ();
+            m_selected_label;
+            */
         }
     };
 }
