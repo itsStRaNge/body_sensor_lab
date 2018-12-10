@@ -1,6 +1,7 @@
 package com.lukas.body_sensor_lab;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.CompoundButton;
@@ -87,9 +88,6 @@ public class MainActivity extends SensorHandler implements Switch.OnCheckedChang
             case R.id.radio_jumping:
                 m_selected_label = JUMPING_LABEL;
                 break;
-            case R.id.radio_nothing:
-                m_selected_label = JUMPING_LABEL;
-                break;
             case R.id.radio_sitting:
                 m_selected_label = SITTING_LABEL;
                 break;
@@ -100,11 +98,13 @@ public class MainActivity extends SensorHandler implements Switch.OnCheckedChang
                 m_selected_label = WALKING_LABEL;
                 break;
             case R.id.radio_running:
-                m_selected_label = NOTHING_LABEL;
+                m_selected_label = RUNNING_LABEL;
                 break;
+            case R.id.radio_nothing:
             default:
                 m_selected_label = NOTHING_LABEL;
         }
+        Log.i(TAG, String.valueOf(m_selected_label));
     }
 
 
